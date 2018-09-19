@@ -47,6 +47,10 @@ class Client
 			$response = $this->client->post('', ['form_params' => $fp]);
 			$contents = $response->getBody()->getContents();
 
+			if (config('whmcs.use_floats')) {
+				$contents = preg_replace('/":"(-?\d+\.\d\d)"/', '":\1', $contents);
+			}
+
 			return json_decode($contents, true);
 		} catch (ConnectException $e) {
 

@@ -9,7 +9,7 @@ return [
 	| Main URL to your WHMCS
 	|
 	*/
-	'url'      => env('WHMCS_URL', 'http://localhost/whmcs'),
+	'url'         => env('WHMCS_URL', 'http://localhost/whmcs'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,10 +26,10 @@ return [
 	| @see https://developers.whmcs.com/api/authentication/
 	|
 	*/
-	'auth'     => [
-		'type'     => env('WHMCS_AUTH_TYPE', 'api'),
+	'auth'        => [
+		'type' => env('WHMCS_AUTH_TYPE', 'api'),
 
-		'api'      => [
+		'api' => [
 			'identifier' => env('WHMCS_API_ID', ''),
 			'secret'     => env('WHMCS_API_SECRET', ''),
 		],
@@ -51,7 +51,7 @@ return [
 	| @see https://docs.whmcs.com/AutoAuth
 	|
 	*/
-	'autoauth' => [
+	'autoauth'    => [
 		'key'  => env('WHMCS_AUTOAUTH_KEY'),
 		'goto' => 'clientarea.php?action=products',
 	],
@@ -67,4 +67,18 @@ return [
 	*/
 	'session_key' => env('WHMCS_SESSION_USER_KEY', 'user'),
 
+	/*
+	|--------------------------------------------------------------------------
+	| Convert numbers from strings to floats in results
+	|--------------------------------------------------------------------------
+	|
+	| WHMCS API returns numbers (prices, etc..) as strings in its JSON results.
+	| This option will reformat the response so all the numbers with two decimals
+	| will be converted to floats in the resulting array. If you just need to
+	| display the results, leave the option turned off.
+	|
+	| Default: false
+	|
+	*/
+	'use_floats'  => false,
 ];
