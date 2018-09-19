@@ -47,11 +47,11 @@ class Client
 			$response = $this->client->post('', ['form_params' => $fp]);
 			$contents = $response->getBody()->getContents();
 
-			if (config('whmcs.use_floats')) {
+			if (config('whmcs.use_floats', false)) {
 				$contents = preg_replace('/":"(-?\d+\.\d\d)"/', '":\1', $contents);
 			}
 
-			return json_decode($contents, true);
+			return json_decode($contents, config('whmcs.result_as_array', true));
 		} catch (ConnectException $e) {
 
 			return ['result' => 'error', 'message' => $e->getMessage()];

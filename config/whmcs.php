@@ -81,4 +81,15 @@ return [
 	|
 	*/
 	'use_floats'  => false,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Return the results as associative arrays
+	|--------------------------------------------------------------------------
+	|
+	| true: get result as an associative array.
+	| false: get the result as a stdClass object.
+	|
+	*/
+	'result_as_array' => true,
 ];
