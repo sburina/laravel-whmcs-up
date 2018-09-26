@@ -31,9 +31,9 @@ class UserProvider implements BaseProvider
 		if (session()->has(config('whmcs.session_key'))) {
 			$userAttributes = session()->get(config('whmcs.session_key'));
 		} else {
-			$res = $this->client->sbGetClientsDetails(null, $identifier);
+			$res = (array)$this->client->sbGetClientsDetails(null, $identifier);
 			if (array_has($res, 'result') && $res['result'] === 'success') {
-				$userAttributes = $res['client'];
+				$userAttributes = (array)$res['client'];
 			}
 		}
 
@@ -79,9 +79,9 @@ class UserProvider implements BaseProvider
 		if (session()->has(config('whmcs.session_key'))) {
 			$userAttributes = session()->get(config('whmcs.session_key'));
 		} else {
-			$res = $this->client->sbGetClientsDetails($credentials['email']);
+			$res = (array)$this->client->sbGetClientsDetails($credentials['email']);
 			if (array_has($res, 'result') && $res['result'] === 'success') {
-				$userAttributes = $res['client'];
+				$userAttributes = (array)$res['client'];
 			}
 		}
 
@@ -99,7 +99,7 @@ class UserProvider implements BaseProvider
 	public function validateCredentials(Authenticatable $user, array $credentials)
 	{
 		/** @var array $res */
-		$res = $this->client->sbValidateLogin(
+		$res = (array)$this->client->sbValidateLogin(
 			$credentials['email'],
 			$credentials['password']
 		);
