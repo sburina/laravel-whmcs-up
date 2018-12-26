@@ -118,7 +118,7 @@ class Whmcs
 	public function sbValidateLogin($email, $password2)
 	{
 		return (new Client)->post([
-			'action'    => 'getClientsDetails',
+			'action'    => 'ValidateLogin',
 			'email'     => $email,
 			'password2' => $password2,
 		]);
