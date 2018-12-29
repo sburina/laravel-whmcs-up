@@ -7,8 +7,6 @@ use Illuminate\Auth\GenericUser;
 /**
  * Class WhmcsUser
  *
- * @package App\Burina\Modules\Whmcs
- *
  * @property-read int    $userid
  * @property-read int    $id
  * @property-read string $uuid
