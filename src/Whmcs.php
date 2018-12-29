@@ -34,7 +34,7 @@ class Whmcs
 	public function __call($name, $args)
 	{
 		$params           = $args[0];
-		$parame['action'] = $name;
+		$params['action'] = $name;
 
 		return (new Client)->post($params);
 	}
