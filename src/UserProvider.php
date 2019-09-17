@@ -2,6 +2,7 @@
 
 namespace Sburina\Whmcs;
 
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider as BaseProvider;
 
@@ -32,7 +33,7 @@ class UserProvider implements BaseProvider
             $userAttributes = session()->get(config('whmcs.session_key'));
         } else {
             $res = (array) $this->client->sbGetClientsDetails(null, $identifier);
-            if (array_has($res, 'result') && $res['result'] === 'success') {
+            if (Arr::has($res, 'result') && $res['result'] === 'success') {
                 $userAttributes = (array) $res['client'];
             }
         }
@@ -80,7 +81,7 @@ class UserProvider implements BaseProvider
             $userAttributes = session()->get(config('whmcs.session_key'));
         } else {
             $res = (array) $this->client->sbGetClientsDetails($credentials['email']);
-            if (array_has($res, 'result') && $res['result'] === 'success') {
+            if (Arr::has($res, 'result') && $res['result'] === 'success') {
                 $userAttributes = (array) $res['client'];
             }
         }
@@ -104,7 +105,7 @@ class UserProvider implements BaseProvider
             $credentials['password']
         );
 
-        if (array_has($res, 'result') && $res['result'] === 'success') {
+        if (Arr::has($res, 'result') && $res['result'] === 'success') {
             session()->put(config('whmcs.session_key'), $this->retrieveByCredentials($credentials)->getAttributes());
 
             return true;
