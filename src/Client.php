@@ -18,7 +18,7 @@ class Client
      */
     public function __construct()
     {
-        $this->client = new GuzzleClient([
+        $options = [
             'timeout'     => 30,
             'debug'       => false,
             'http_errors' => true,
@@ -27,7 +27,11 @@ class Client
             'headers'     => [
                 'User-Agent' => 'sburina/laravel-whmcs-up',
             ],
-        ]);
+        ];
+
+        if(!empty(config('whmcs.api_access_key'))) $options['query'] = [ 'accesskey' => config('whmcs.api_access_key') ];
+
+        $this->client = new GuzzleClient($options);
     }
 
     /**
