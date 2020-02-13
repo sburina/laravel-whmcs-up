@@ -42,6 +42,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | API Credentials
+    |--------------------------------------------------------------------------
+    |
+    | an access key can be configured to allow IP restrictions to be bypassed.
+
+    | It works by defining a secret key/passphrase in the WHMCS configuration.php
+    | file which is then passed into all API calls. To configure it, add a line 
+    | as follows to your configuration.php file in the root WHMCS directory.
+    |
+    | @see https://developers.whmcs.com/api/access-control/
+    |
+    */
+    'api_access_key'     => env('WHMCS_API_ACCESS_KEY', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | AutoAuth
     |--------------------------------------------------------------------------
     | Auth Key to automatically login the user to WHMCS if already loogged in
