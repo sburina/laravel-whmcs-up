@@ -13,7 +13,7 @@
 	"require": {
 		"guzzlehttp/guzzle": "~6.0",
 		"ext-json": "*",
-		"laravel/framework": "^5|^6|^7"
+		"laravel/framework": "^5 || ^6 || ^7 || ^8 || ^9"
 	},
 	"require-dev": {
 	},
