@@ -1,6 +1,6 @@
 {
 	"name": "sburina/laravel-whmcs-up",
-	"description": "WHMCS API client and user provider for Laravel",
+	"description": "WHMCS API client and user provider for Laravel 5",
 	"type": "library",
 	"license": "MIT",
 	"minimum-stability": "stable",
@@ -13,7 +13,7 @@
 	"require": {
 		"guzzlehttp/guzzle": "~6.0",
 		"ext-json": "*",
-		"laravel/framework": "^5 || ^6 || ^7 || ^8 || ^9"
+		"laravel/framework": "^5|^6|^7"
 	},
 	"require-dev": {
 	},
