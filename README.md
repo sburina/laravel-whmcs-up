@@ -5,7 +5,7 @@ Laravel WHMCS-UP
 [![Total Downloads](https://poser.pugx.org/sburina/laravel-whmcs-up/downloads)](https://packagist.org/packages/sburina/laravel-whmcs-up)
 [![License](https://poser.pugx.org/sburina/laravel-whmcs-up/license)](https://packagist.org/packages/sburina/laravel-whmcs-up)
 
-This package provides several useful functions for integration of your Laravel application with WHMCS:
+This package provides several useful functions for integration of your Laravel application with WHMCS (up to version 7.9:
 
 - WHMCS API client
 - WHMCS user provider
