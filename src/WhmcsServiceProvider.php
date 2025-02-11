@@ -16,15 +16,13 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->isLaravel()) {
-            $source = dirname(__DIR__).'/config/whmcs.php';
-            $this->publishes([$source => config_path('whmcs.php')]);
-            $this->mergeConfigFrom($source, 'whmcs');
-        }
+        $this->publishes([
+            dirname(__DIR__) . '/config/whmcs.php' => config_path('whmcs.php'),
+        ], 'whmcs-config');
     }
 
     /**
-     * Register the service provider.
+     * Register the application services.
      *
      * @return void
      */
@@ -34,17 +32,27 @@ class WhmcsServiceProvider extends ServiceProvider
     }
 
     /**
-     * register Whmcs.
+     * Registers the WHMCS singleton instance.
+     *
+     * @return void
      */
     public function registerWhmcs()
     {
+        // Merge the configuration
+        $this->mergeConfigFrom(dirname(__DIR__) . '/config/whmcs.php', 'whmcs');
+        does this page need any6 changes to support laravel 100 & 11
+        // Register the singleton
         $this->app->singleton('whmcs', function () {
             return new Whmcs();
         });
+
+        // Register the alias
         $this->app->alias('whmcs', Whmcs::class);
     }
 
     /**
+     * Get the services provided by the provider.
+     *
      * @return array
      */
     public function provides()
@@ -54,11 +62,4 @@ class WhmcsServiceProvider extends ServiceProvider
         ];
     }
 
-    /**
-     * @return bool
-     */
-    protected function isLaravel()
-    {
-        return !preg_match('/lumen/i', $this->app->version());
-    }
 }
