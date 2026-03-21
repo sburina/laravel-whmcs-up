@@ -2,6 +2,7 @@
 
 namespace Sburina\Whmcs;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -17,10 +18,14 @@ class WhmcsServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->isLaravel()) {
-            $source = dirname(__DIR__).'/config/whmcs.php';
+            $source = dirname(__DIR__) . '/config/whmcs.php';
             $this->publishes([$source => config_path('whmcs.php')]);
             $this->mergeConfigFrom($source, 'whmcs');
         }
+
+        Auth::provider('whmcs', function () {
+            return new UserProvider();
+        });
     }
 
     /**
@@ -29,14 +34,6 @@ class WhmcsServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        $this->registerWhmcs();
-    }
-
-    /**
-     * register Whmcs.
-     */
-    public function registerWhmcs()
     {
         $this->app->singleton('whmcs', function () {
             return new Whmcs();
@@ -49,9 +46,7 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            'whmcs',
-        ];
+        return ['whmcs'];
     }
 
     /**
