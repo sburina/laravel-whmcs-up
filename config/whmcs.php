@@ -58,6 +58,17 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
+	| SSL Certificate Verification
+	|--------------------------------------------------------------------------
+	|
+	| Verify the WHMCS server's SSL certificate. Should be true in production.
+	| Set to false only for development with self-signed certificates.
+	|
+	*/
+	'verify_ssl'      => env('WHMCS_VERIFY_SSL', true),
+
+	/*
+	|--------------------------------------------------------------------------
 	| AutoAuth
 	|--------------------------------------------------------------------------
 	| Auth Key to automatically login the user to WHMCS if already loogged in
