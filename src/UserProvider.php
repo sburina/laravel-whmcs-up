@@ -18,12 +18,10 @@ class UserProvider implements BaseProvider
         $this->client = app('whmcs');
     }
 
-
     /**
      * Retrieve a user by their unique identifier.
      *
      * @param  mixed  $identifier
-     *
      * @return WhmcsUser|null
      */
     public function retrieveById($identifier)
@@ -34,19 +32,18 @@ class UserProvider implements BaseProvider
         } else {
             $res = (array) $this->client->sbGetClientsDetails(null, $identifier);
             if (Arr::has($res, 'result') && $res['result'] === 'success') {
-                $userAttributes = (array) $res['client'];
+                $userAttributes = (array) ($res['client'] ?? []);
             }
         }
 
-        return (sizeof($userAttributes) > 0) ? new WhmcsUser($userAttributes) : null;
+        return !empty($userAttributes) ? new WhmcsUser($userAttributes) : null;
     }
 
     /**
      * Retrieve a user by their unique identifier and "remember me" token.
      *
-     * @param  mixed  $identifier
+     * @param  mixed   $identifier
      * @param  string  $token
-     *
      * @return null
      */
     public function retrieveByToken($identifier, $token)
@@ -59,7 +56,6 @@ class UserProvider implements BaseProvider
      *
      * @param  Authenticatable  $user
      * @param  string  $token
-     *
      * @return void
      */
     public function updateRememberToken(Authenticatable $user, $token)
@@ -71,22 +67,25 @@ class UserProvider implements BaseProvider
      * Retrieve a user by the given credentials.
      *
      * @param  array  $credentials
-     *
      * @return WhmcsUser|null
      */
     public function retrieveByCredentials(array $credentials)
     {
+        if (!isset($credentials['email'])) {
+            return null;
+        }
+
         $userAttributes = [];
         if (session()->has(config('whmcs.session_key'))) {
             $userAttributes = session()->get(config('whmcs.session_key'));
         } else {
             $res = (array) $this->client->sbGetClientsDetails($credentials['email']);
             if (Arr::has($res, 'result') && $res['result'] === 'success') {
-                $userAttributes = (array) $res['client'];
+                $userAttributes = (array) ($res['client'] ?? []);
             }
         }
 
-        return (sizeof($userAttributes) > 0) ? new WhmcsUser($userAttributes) : null;
+        return !empty($userAttributes) ? new WhmcsUser($userAttributes) : null;
     }
 
     /**
@@ -94,20 +93,24 @@ class UserProvider implements BaseProvider
      *
      * @param  Authenticatable  $user
      * @param  array  $credentials
-     *
      * @return bool
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        /** @var array $res */
+        if (!isset($credentials['email'], $credentials['password'])) {
+            return false;
+        }
+
         $res = (array) $this->client->sbValidateLogin(
             $credentials['email'],
             $credentials['password']
         );
 
         if (Arr::has($res, 'result') && $res['result'] === 'success') {
-            session()->put(config('whmcs.session_key'), $this->retrieveByCredentials($credentials)->getAttributes());
-
+            $retrieved = $this->retrieveByCredentials($credentials);
+            if ($retrieved) {
+                session()->put(config('whmcs.session_key'), $retrieved->getAttributes());
+            }
             return true;
         }
 
